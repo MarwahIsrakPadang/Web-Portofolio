@@ -35,10 +35,10 @@ export default function Experience() {
           className="text-center mb-4"
         >
           <p className="text-sm font-medium text-accent tracking-[0.2em] uppercase mb-2">
-            My Journey
+            Perjalanan
           </p>
           <h2 className="text-2xl sm:text-3xl font-bold text-primary leading-[1.2]">
-            Work Experience<br />& Education
+            Pengalaman Kerja<br />& Pendidikan
           </h2>
         </motion.div>
 
@@ -58,15 +58,16 @@ export default function Experience() {
 
           <div className="flex flex-col gap-6">
             {experiences.map((e, i) => (
-              <motion.div
-                key={i}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                custom={i}
-                variants={revealLeft}
-                className="relative pl-14"
-              >
+                <motion.div
+                  key={i}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: false, margin: "-100px" }}
+                  custom={i}
+                  variants={revealLeft}
+                  className="relative pl-14"
+                >
+
                 <div className="absolute left-[11px] top-1.5 w-[15px] h-[15px] rounded-full bg-accent border-[3px] border-bg shadow shadow-violet-500/30" />
 
                 <div className="bg-card border border-border rounded-xl p-4 hover:border-accent/40 hover:shadow-sm hover:shadow-violet-500/5 transition-all">

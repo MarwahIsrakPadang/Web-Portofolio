@@ -1,89 +1,62 @@
 import { motion } from "framer-motion";
 import { Code2, Sparkles, Target, Zap } from "lucide-react";
-import { reveal, revealLeft, revealRight } from "../lib/animations";
 
-const highlights = [
-  { icon: Code2, text: "Frontend & Backend Development" },
-  { icon: Target, text: "Fokus pada performa & user experience" },
-  { icon: Zap, text: "Cepat belajar teknologi baru" },
-  { icon: Sparkles, text: "Desain yang bersih & modern" },
-];
+  const highlights = [
+    { icon: Code2, text: "Pengembangan Frontend & Backend" },
+    { icon: Target, text: "Fokus pada performa & user experience" },
+    { icon: Zap, text: "Cepat belajar teknologi baru" },
+    { icon: Sparkles, text: "Desain yang bersih & modern" },
+  ];
 
-const tech = [
-  "Laravel", "React", "JavaScript", "Tailwind CSS", "Node.js",
-  "Express", "MySQL", "Flutter", "Git",
-];
+// Hapus tech
 
 export default function About() {
   return (
-    <section id="about" className="py-10 px-6 relative">
-      <div className="section-divider mb-8" />
-
+    <section id="about" className="py-24 px-6 relative bg-slate-950">
       <div className="max-w-4xl mx-auto">
         <motion.div
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          variants={reveal}
-          className="text-center mb-4"
+          className="text-center mb-16"
         >
-          <p className="text-sm font-medium text-accent tracking-[0.2em] uppercase mb-2">
-            About
+          <p className="text-violet-400 font-medium tracking-[0.2em] uppercase text-sm mb-4">
+            Tentang Saya
           </p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-primary leading-[1.2]">
-            Get to Know<br />Me Better
+          <h2 className="text-4xl md:text-5xl font-extrabold text-white">
+            Mengenal Lebih Dekat
           </h2>
         </motion.div>
 
         <motion.p
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          custom={1}
-          variants={reveal}
-          className="text-secondary text-center max-w-xl mx-auto mb-6 leading-relaxed"
+          transition={{ delay: 0.2 }}
+          className="text-slate-400 text-center max-w-2xl mx-auto mb-16 leading-relaxed text-lg"
         >
-          Saya seorang developer yang fokus membangun web dan aplikasi moderen
-          dengan pengalaman di Fluter, Laravel, React, Node.js, dan berbagai teknologi lainnya.
+          Saya seorang developer yang fokus membangun web dan aplikasi modern
+          dengan pengalaman di Flutter, Laravel, React, Node.js, dan berbagai teknologi lainnya.
           Saya senang belajar hal baru dan menciptakan solusi yang bermanfaat.
         </motion.p>
 
-        <div className="grid sm:grid-cols-2 gap-3 mb-6">
+        <div className="grid md:grid-cols-2 gap-6 mb-16">
           {highlights.map((h, i) => (
             <motion.div
               key={h.text}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              custom={i}
-              variants={i % 2 === 0 ? revealLeft : revealRight}
-              className="flex items-center gap-3 bg-card border border-border rounded-xl p-3 hover:border-accent/40 hover:shadow-sm hover:shadow-violet-500/5 transition-all"
+              initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, margin: "-100px" }}
+              transition={{ delay: i * 0.1 }}
+              className="flex items-center gap-4 bg-slate-900/50 border border-white/5 rounded-2xl p-6 hover:border-violet-500/30 transition-all"
             >
-              <div className="w-10 h-10 rounded-lg bg-violet-500/10 flex items-center justify-center shrink-0">
-                <h.icon size={18} className="text-accent" />
+              <div className="w-12 h-12 rounded-xl bg-violet-500/10 flex items-center justify-center shrink-0">
+                <h.icon size={24} className="text-violet-400" />
               </div>
-              <span className="text-sm text-primary font-medium">{h.text}</span>
+              <span className="text-slate-200 font-medium">{h.text}</span>
             </motion.div>
           ))}
         </div>
-
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          custom={1}
-          variants={reveal}
-          className="flex flex-wrap justify-center gap-3"
-        >
-          {tech.map((t) => (
-            <span
-              key={t}
-              className="bg-card border border-border text-sm text-secondary px-4 py-2 rounded-full hover:border-accent hover:text-accent hover:bg-accent/5 transition-all"
-            >
-              {t}
-            </span>
-          ))}
-        </motion.div>
       </div>
     </section>
   );

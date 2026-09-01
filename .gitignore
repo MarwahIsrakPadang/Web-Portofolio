@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Environment variables (Sangat Penting)
+.env
+.env.*
+
+# Backup & temporary files
+*.tmp
+*.bak

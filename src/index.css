@@ -1,56 +1,38 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-@theme {
-  --color-bg: #030014;
-  --color-card: #0B0720;
-  --color-primary: #F1F5F9;
-  --color-secondary: #94A3B8;
-  --color-accent: #8B5CF6;
-  --color-hover: #A78BFA;
-  --color-border: #1E1245;
-  --color-success: #10B981;
+@layer base {
+  :root {
+    --background: 224 71% 4%;
+    --foreground: 210 20% 98%;
+    --primary: 263 70% 50%;
+    --muted: 215 27% 17%;
+    --accent: 263 70% 50%;
+  }
 }
 
 html {
-  scroll-behavior: smooth;
+  height: auto;
 }
 
 body {
-  background-color: var(--color-bg);
-  color: var(--color-primary);
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: system-ui, -apple-system, sans-serif;
+  margin: 0;
   min-height: 100vh;
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-  background:
-    radial-gradient(ellipse 70% 50% at 50% 60%, rgba(139,92,246,0.12) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 30% at 80% 20%, rgba(99,102,241,0.06) 0%, transparent 50%),
-    radial-gradient(ellipse 30% 30% at 20% 80%, rgba(139,92,246,0.04) 0%, transparent 50%);
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-  background-image:
-    repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(148,163,184,0.015) 39px, rgba(148,163,184,0.015) 40px),
-    repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(148,163,184,0.015) 39px, rgba(148,163,184,0.015) 40px);
+main {
+  flex: 1;
 }
 
-::selection {
-  background-color: var(--color-accent);
-  color: white;
-}
-
-.section-divider {
-  height: 1px;
-  background: linear-gradient(to right, transparent, var(--color-border), transparent);
+section {
+  content-visibility: auto;
+  contain-intrinsic-size: 800px;
 }

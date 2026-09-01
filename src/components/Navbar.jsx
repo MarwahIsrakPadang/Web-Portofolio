@@ -2,12 +2,12 @@ import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const links = [
-  { label: "Home", href: "#hero" },
-  { label: "About", href: "#about" },
-  { label: "Projects", href: "#projects" },
-  { label: "Skills", href: "#skills" },
-  { label: "Experience", href: "#experience" },
-  { label: "Contact", href: "#contact" },
+  { label: "Beranda", href: "#hero" },
+  { label: "Tentang", href: "#about" },
+  { label: "Keahlian", href: "#skills" },
+  { label: "Projek", href: "#projek" },
+  { label: "Pengalaman", href: "#experience" },
+  { label: "Kontak", href: "#contact" },
 ];
 
 export default function Navbar() {
@@ -22,35 +22,34 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-4 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-slate-950/90 backdrop-blur-lg border-b border-border shadow-lg shadow-black/20"
-          : "bg-transparent"
+          ? "px-6"
+          : "px-6"
       }`}
     >
-      <div className="max-w-5xl mx-auto flex items-center justify-between px-6 h-16">
-        <a
-          href="#hero"
-          className="text-xl font-bold bg-gradient-to-r from-violet-400 via-purple-500 to-fuchsia-400 bg-clip-text text-transparent"
-        >
-          Portfolio
+      <div className={`max-w-4xl mx-auto flex items-center justify-between px-6 py-3 rounded-2xl transition-all duration-300 border ${
+        scrolled
+          ? "bg-slate-950/80 backdrop-blur-md border-white/10 shadow-lg"
+          : "bg-transparent border-transparent"
+      }`}>
+        <a href="#hero" className="text-xl font-bold text-white tracking-tighter">
+          Marwah<span className="text-violet-500">.</span>
         </a>
 
         <button
-          className="md:hidden p-2 text-primary"
+          className="md:hidden text-white p-2"
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
+          aria-expanded={open}
         >
-          {open ? <X size={22} /> : <Menu size={22} />}
+          {open ? <X size={20} /> : <Menu size={20} />}
         </button>
 
-        <ul className="hidden md:flex gap-8 text-sm font-medium text-secondary">
+        <ul className="hidden md:flex gap-6 text-sm font-medium text-slate-300">
           {links.map((l) => (
             <li key={l.href}>
-              <a
-                href={l.href}
-                className="hover:text-accent transition-colors relative after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-accent after:transition-all hover:after:w-full"
-              >
+              <a href={l.href} className="hover:text-white transition-colors">
                 {l.label}
               </a>
             </li>
@@ -59,15 +58,11 @@ export default function Navbar() {
       </div>
 
       {open && (
-        <div className="md:hidden bg-slate-950/95 backdrop-blur-lg border-b border-border px-6 pb-4">
-          <ul className="flex flex-col gap-3 text-sm font-medium text-secondary">
+        <div className="md:hidden mt-2 mx-6 bg-slate-950/90 backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-2xl">
+          <ul className="flex flex-col gap-4 text-sm font-medium text-slate-300">
             {links.map((l) => (
               <li key={l.href}>
-                <a
-                  href={l.href}
-                  onClick={() => setOpen(false)}
-                  className="block hover:text-accent transition-colors"
-                >
+                <a href={l.href} onClick={() => setOpen(false)} className="block hover:text-white">
                   {l.label}
                 </a>
               </li>

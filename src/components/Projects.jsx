@@ -1,196 +1,82 @@
-import { useState, useEffect } from "react";
-import { FolderGit2, X } from "lucide-react";
-import { motion, useTransform, AnimatePresence } from "framer-motion";
-import { projectsData } from "../data/projects";
-import { reveal, revealLeft, revealRight } from "../lib/animations";
-import { useTilt } from "../lib/useTilt";
-import { useSpotlight } from "../lib/useSpotlight";
+import { useState } from "react";
+import { FolderGit2, ExternalLink, X } from "lucide-react";
 
-const tagColors = {
-  React: "bg-blue-500/10 text-blue-400",
-  "Node.js": "bg-green-500/10 text-green-400",
-  Express: "bg-gray-500/10 text-gray-400",
-  MySQL: "bg-orange-500/10 text-orange-400",
-  NFC: "bg-purple-500/10 text-purple-400",
-  PHP: "bg-indigo-500/10 text-indigo-400",
-  Bootstrap: "bg-violet-500/10 text-violet-400",
-};
-
-function Lightbox({ src, alt, onClose }) {
-  useEffect(() => {
-    const handleKey = (e) => { if (e.key === "Escape") onClose(); };
-    document.addEventListener("keydown", handleKey);
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", handleKey);
-      document.body.style.overflow = "";
-    };
-  }, [onClose]);
-
+function GithubIcon({ size = 16, className = "" }) {
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.2 }}
-      onClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 cursor-zoom-out"
-    >
-      <motion.img
-        src={src}
-        alt={alt}
-        initial={{ scale: 0.85, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.85, opacity: 0 }}
-        transition={{ duration: 0.25, ease: "easeOut" }}
-        onClick={(e) => e.stopPropagation()}
-        className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl cursor-default"
-      />
-      <button
-        onClick={onClose}
-        className="absolute top-4 right-4 p-2 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
-      >
-        <X size={24} />
-      </button>
-    </motion.div>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width={size} height={size} className={className}>
+      <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+      <path d="M9 18c-4.51 2-5-2-7-2" />
+    </svg>
   );
 }
 
-function ProjectCard({ project, index }) {
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const { rotateX, rotateY, handleMouseMove: tiltMove, handleMouseLeave: tiltLeave } = useTilt(8);
-  const { mouseX, mouseY, handleMouseMove: spotMove, handleMouseLeave: spotLeave } = useSpotlight();
+import { motion, AnimatePresence } from "framer-motion";
+import projectsData from "../data/projects";
 
-  const handleMove = (e) => {
-    tiltMove(e);
-    spotMove(e);
-  };
-
-  const handleLeave = (e) => {
-    tiltLeave(e);
-    spotLeave(e);
-  };
-
-  const spotlight = useTransform(
-    [mouseX, mouseY],
-    ([x, y]) => `radial-gradient(circle at ${x}px ${y}px, rgba(139,92,246,0.08) 0%, transparent 50%)`
-  );
-
+function ProjectModal({ project, onClose }) {
+  if (!project) return null;
   return (
-    <>
-      <AnimatePresence>
-        {lightboxOpen && project.image && (
-          <Lightbox
-            src={project.image}
-            alt={project.title}
-            onClose={() => setLightboxOpen(false)}
-          />
-        )}
-      </AnimatePresence>
-
-      <motion.article
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        custom={index}
-        variants={index % 2 === 0 ? revealLeft : revealRight}
-        style={{ perspective: 1200 }}
-        onMouseMove={handleMove}
-        onMouseLeave={handleLeave}
-        className="group relative bg-card border border-border rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-violet-500/10 hover:-translate-y-1 transition-all duration-300"
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <motion.div 
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+        onClick={onClose} className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" 
+      />
+      <motion.div 
+        initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
+        className="relative bg-slate-900 border border-white/10 rounded-2xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto"
       >
-        <motion.div
-          className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          style={{ background: spotlight }}
-        />
-
-        <motion.div style={{ rotateX, rotateY }} className="origin-center relative z-10">
-          <div className="h-40 bg-gradient-to-br from-violet-950 via-slate-900 to-purple-950 flex items-center justify-center relative overflow-hidden">
-            {project.image ? (
-              <button onClick={() => setLightboxOpen(true)} className="w-full h-full absolute inset-0 cursor-zoom-in">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 pointer-events-none"
-                />
-              </button>
-            ) : (
-              <FolderGit2 size={40} className="text-accent/30 group-hover:scale-110 group-hover:text-accent/50 transition-all duration-300" />
-            )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
-            <span className="absolute top-3 left-3 text-5xl font-black text-white/[0.04] select-none">
-              #{String(project.id).padStart(2, "0")}
-            </span>
-            <span className="absolute top-3 right-3 text-[11px] font-semibold text-violet-400/50 uppercase tracking-wider">
-              Web
-            </span>
-          </div>
-
-        <div className="p-4 flex flex-col gap-2">
-          <h3 className="text-base font-semibold text-primary leading-snug group-hover:text-accent transition-colors">
-            {project.title}
-          </h3>
-          <p className="text-sm text-secondary leading-relaxed flex-1 line-clamp-3">
-            {project.description}
-          </p>
-
-          <div className="flex flex-wrap gap-1.5">
-            {project.tags.map((tag) => (
-              <span
-                key={tag}
-                className={`text-[11px] font-medium px-2 py-0.5 rounded-full ${
-                  tagColors[tag] || "bg-slate-500/10 text-slate-400"
-                }`}
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          {project.githubLink && (
-            <a
-              href={project.githubLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-xs font-medium text-accent hover:text-hover transition-colors pt-2 border-t border-border"
-            >
-              <FolderGit2 size={13} /> Lihat di GitHub
+        <button onClick={onClose} className="absolute top-4 right-4 text-slate-400 hover:text-white"><X /></button>
+        {project.image_url && <img src={project.image_url} alt={project.title} className="w-full h-64 object-cover rounded-lg mb-6" />}
+        <h2 className="text-3xl font-bold text-white mb-4">{project.title}</h2>
+        <p className="text-slate-300 mb-6 leading-relaxed">{project.description}</p>
+        <div className="flex gap-4">
+          {project.link && (
+            <a href={project.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 bg-violet-600 rounded-lg text-white text-sm hover:bg-violet-700">
+              <GithubIcon size={16} /> GitHub
             </a>
           )}
         </div>
       </motion.div>
-    </motion.article>
-    </>
+    </div>
+  );
+}
+
+function ProjectCard({ project, onClick }) {
+  return (
+    <div
+      onClick={() => onClick(project)}
+      className="group cursor-pointer bg-slate-900/40 border border-white/5 rounded-xl overflow-hidden hover:border-violet-500/30 transition-all duration-300 hover:shadow-[0_0_20px_-5px_rgba(139,92,246,0.2)] flex flex-col h-full"
+    >
+      <div className="aspect-video overflow-hidden">
+        {project.image_url ? (
+          <img src={project.image_url} alt={project.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-slate-800/50"><FolderGit2 className="text-slate-700" size={40} /></div>
+        )}
+      </div>
+      <div className="p-5 flex-1 flex flex-col">
+        <h3 className="text-lg font-bold text-white mb-2 group-hover:text-violet-400 transition-colors">{project.title}</h3>
+        <p className="text-slate-400 text-xs leading-relaxed line-clamp-2">{project.description}</p>
+      </div>
+    </div>
   );
 }
 
 export default function Projects() {
+  const [selectedProject, setSelectedProject] = useState(null);
   return (
-    <section id="projects" className="py-10 px-6 relative">
-      <div className="section-divider mb-8" />
-
-      <div className="max-w-5xl mx-auto">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={reveal}
-          className="text-center mb-6"
-        >
-          <p className="text-sm font-medium text-accent tracking-[0.2em] uppercase mb-2">
-            What I Build
-          </p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-primary leading-[1.2]">
-            I Make Incredible<br />Projects
-          </h2>
-        </motion.div>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {projectsData.map((p, i) => (
-            <ProjectCard key={p.id} project={p} index={i} />
-          ))}
+    <section id="projek" className="py-16 px-6 bg-slate-950 relative">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-white mb-2">Projects</h2>
+        </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {projectsData.map((p, i) => <ProjectCard key={p.id} project={p} onClick={setSelectedProject} />)}
         </div>
       </div>
+      <AnimatePresence>
+        {selectedProject && <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />}
+      </AnimatePresence>
     </section>
   );
 }

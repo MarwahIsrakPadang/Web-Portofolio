@@ -1,6 +1,4 @@
-import { Mail, ExternalLink, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
-import { reveal, revealLeft } from "../lib/animations";
 
 function GithubIcon({ size = 18, className = "" }) {
   return (
@@ -24,95 +22,68 @@ function InstagramIcon({ size = 18, className = "" }) {
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-10 px-6 relative">
-      <div className="section-divider mb-8" />
-
+    <section id="contact" className="py-24 px-6 bg-slate-950 relative min-h-[50vh] flex items-center">
       <div className="max-w-4xl mx-auto">
         <motion.div
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          variants={reveal}
-          className="text-center mb-4"
+          className="text-center mb-16"
         >
-          <p className="text-sm font-medium text-accent tracking-[0.2em] uppercase mb-2">
-            Contact
+          <p className="text-violet-400 font-medium tracking-[0.2em] uppercase text-sm mb-4">
+            Kontak
           </p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-primary leading-[1.2]">
-            Let's Work<br />Together
+          <h2 className="text-4xl md:text-5xl font-extrabold text-white">
+            Mari Bekerja Bersama
           </h2>
         </motion.div>
 
         <motion.p
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          custom={1}
-          variants={reveal}
-          className="text-secondary text-center mb-6 max-w-md mx-auto"
+          transition={{ delay: 0.2 }}
+          className="text-slate-400 text-center mb-12 max-w-md mx-auto"
         >
           Punya pertanyaan atau ingin berkolaborasi? Jangan ragu untuk menghubungi saya.
         </motion.p>
 
         <motion.div
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          custom={2}
-          variants={revealLeft}
-          className="grid grid-cols-2 gap-4 max-w-lg mx-auto"
+          transition={{ delay: 0.3 }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto"
         >
           <a
             href="https://www.instagram.com/marwahpadang/"
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center gap-3 bg-card border border-border rounded-xl px-5 py-4 text-sm text-primary hover:border-accent hover:shadow-md hover:shadow-violet-500/10 hover:-translate-y-0.5 transition-all duration-300"
+            className="flex items-center gap-4 bg-slate-900/50 border border-white/5 rounded-2xl p-6 hover:border-violet-500/30 transition-all group"
           >
-            <div className="w-9 h-9 rounded-lg bg-violet-500/10 flex items-center justify-center group-hover:bg-violet-500/20 transition-colors">
-              <InstagramIcon size={17} className="text-accent shrink-0" />
+            <div className="w-12 h-12 rounded-xl bg-violet-500/10 flex items-center justify-center group-hover:bg-violet-500/20 transition-colors">
+              <InstagramIcon size={24} className="text-violet-400" />
             </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-xs text-secondary">Instagram</p>
-              <p className="text-sm font-medium text-primary truncate">marwahpadang</p>
+            <div>
+              <p className="text-xs text-slate-500 uppercase tracking-wider">Instagram</p>
+              <p className="text-sm font-medium text-white">@marwahpadang</p>
             </div>
-            <ExternalLink size={13} className="text-secondary shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
           </a>
 
           <a
             href="https://github.com/MarwahIsrakPadang"
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center gap-3 bg-card border border-border rounded-xl px-5 py-4 text-sm text-primary hover:border-accent hover:shadow-md hover:shadow-violet-500/10 hover:-translate-y-0.5 transition-all duration-300"
+            className="flex items-center gap-4 bg-slate-900/50 border border-white/5 rounded-2xl p-6 hover:border-violet-500/30 transition-all group"
           >
-            <div className="w-9 h-9 rounded-lg bg-violet-500/10 flex items-center justify-center group-hover:bg-violet-500/20 transition-colors">
-              <GithubIcon size={17} className="text-accent shrink-0" />
+            <div className="w-12 h-12 rounded-xl bg-violet-500/10 flex items-center justify-center group-hover:bg-violet-500/20 transition-colors">
+              <GithubIcon size={24} className="text-violet-400" />
             </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-xs text-secondary">GitHub</p>
-              <p className="text-sm font-medium text-primary truncate">@MarwahIsrakPadang</p>
+            <div>
+              <p className="text-xs text-slate-500 uppercase tracking-wider">GitHub</p>
+              <p className="text-sm font-medium text-white">@MarwahIsrakPadang</p>
             </div>
-            <ExternalLink size={13} className="text-secondary shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
           </a>
-
-          <div className="group flex items-center gap-3 bg-card border border-border rounded-xl px-5 py-4 text-sm text-primary">
-            <div className="w-9 h-9 rounded-lg bg-violet-500/10 flex items-center justify-center group-hover:bg-violet-500/20 transition-colors">
-              <Mail size={17} className="text-accent shrink-0" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-xs text-secondary">Email</p>
-              <p className="text-sm font-medium text-primary truncate">marwahpadang27@gmail.com</p>
-            </div>
-          </div>
-
-          <div className="group flex items-center gap-3 bg-card border border-border rounded-xl px-5 py-4 text-sm text-primary">
-            <div className="w-9 h-9 rounded-lg bg-violet-500/10 flex items-center justify-center group-hover:bg-violet-500/20 transition-colors">
-              <MapPin size={17} className="text-accent shrink-0" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-xs text-secondary">Location</p>
-              <p className="text-sm font-medium text-primary">Indonesia</p>
-            </div>
-          </div>
         </motion.div>
       </div>
     </section>
