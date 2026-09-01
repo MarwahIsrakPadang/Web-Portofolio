@@ -29,7 +29,7 @@ export const SmoothCursor = () => {
 
   return (
     <motion.div
-      className="fixed top-0 left-0 z-[9999] pointer-events-none rounded-full bg-white mix-blend-difference"
+      className="fixed top-0 left-0 z-[9999] pointer-events-none rounded-full bg-white mix-blend-difference hidden md:block"
       style={{
         x: cursorXSpring,
         y: cursorYSpring,

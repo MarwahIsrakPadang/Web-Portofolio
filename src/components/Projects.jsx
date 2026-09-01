@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { FolderGit2, ExternalLink, X } from "lucide-react";
 
 function GithubIcon({ size = 16, className = "" }) {
@@ -14,24 +15,31 @@ import { motion, AnimatePresence } from "framer-motion";
 import projectsData from "../data/projects";
 
 function ProjectModal({ project, onClose }) {
-  if (!project) return null;
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = 'unset'; };
+  }, []);
+
+  const modalContent = (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       <motion.div 
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-        onClick={onClose} className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" 
+        onClick={onClose} className="absolute inset-0 bg-slate-950/90 backdrop-blur-md" 
       />
       <motion.div 
-        initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
-        className="relative bg-slate-900 border border-white/10 rounded-2xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto"
+        initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }}
+        className="relative bg-slate-900 border border-white/10 rounded-2xl p-6 w-full max-w-sm sm:max-w-md md:max-w-lg max-h-[85vh] flex flex-col shadow-2xl overflow-hidden"
       >
-        <button onClick={onClose} className="absolute top-4 right-4 text-slate-400 hover:text-white"><X /></button>
-        {project.image_url && <img src={project.image_url} alt={project.title} className="w-full h-64 object-cover rounded-lg mb-6" />}
-        <h2 className="text-3xl font-bold text-white mb-4">{project.title}</h2>
-        <p className="text-slate-300 mb-6 leading-relaxed">{project.description}</p>
-        <div className="flex gap-4">
+        <div className="overflow-y-auto pr-2 -mr-2">
+          <button onClick={onClose} className="absolute top-4 right-4 text-slate-400 hover:text-white z-10 p-2"><X /></button>
+          {project.image_url && <img src={project.image_url} alt={project.title} className="w-full h-52 object-cover rounded-lg mb-6" />}
+          <h2 className="text-2xl font-bold text-white mb-4">{project.title}</h2>
+          <p className="text-slate-300 mb-6 leading-relaxed text-sm">{project.description}</p>
+        </div>
+        
+        <div className="flex gap-4 mt-auto pt-4 border-t border-white/5">
           {project.link && (
-            <a href={project.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 bg-violet-600 rounded-lg text-white text-sm hover:bg-violet-700">
+            <a href={project.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 bg-violet-600 rounded-lg text-white text-sm hover:bg-violet-700 transition-colors">
               <GithubIcon size={16} /> GitHub
             </a>
           )}
@@ -39,6 +47,8 @@ function ProjectModal({ project, onClose }) {
       </motion.div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 }
 
 function ProjectCard({ project, onClick }) {
