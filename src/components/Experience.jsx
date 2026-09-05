@@ -6,6 +6,14 @@ const experiences = [
   {
     type: "work",
     icon: Briefcase,
+    title: "Web Developer",
+    subtitle: "IdeologTECH",
+    period: "Sekarang",
+    desc: "Berkontribusi sebagai Web Developer dalam pengembangan website dan solusi digital bersama tim IdeologTECH.",
+  },
+  {
+    type: "work",
+    icon: Briefcase,
     title: "Frontend Developer",
     subtitle: "Proyek Pribadi",
     period: "2025 - Sekarang",

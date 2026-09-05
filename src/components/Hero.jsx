@@ -34,10 +34,7 @@ export default function Hero() {
               Halo, Saya
             </m.p>
             <m.h1 variants={itemVariants} className="text-6xl md:text-8xl font-extrabold text-white leading-tight">
-              Marwah<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-indigo-400">
-                Israk Padang
-              </span>
+              Marwah Israk Padang
             </m.h1>
             <m.p variants={itemVariants} className="text-xl text-slate-400 max-w-md mx-auto md:mx-0 font-light">
               Pengembang web dan mobile developer pemula yang fokus pada pengalaman pengguna modern.
